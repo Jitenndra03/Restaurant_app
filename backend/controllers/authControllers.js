@@ -14,7 +14,7 @@ const generateToken=(res,payload)=>{
     res.cookie("token", token,{
         httpOnly:true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
         secure:process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-        sameSite:"strict", // Cookie is only sent in first-party context (prevents CSRF attacks)
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
         maxAge:24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
     });
     // Return the generated token
@@ -131,7 +131,7 @@ export const logoutUser = (req, res) => {
         res.clearCookie("token", {
             httpOnly: true, // Cookie cannot be accessed via JavaScript
             secure: process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-            sameSite: "strict" // Cookie is only sent in first-party context
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict" // Match the setting used when the cookie was created
         });
         // Return success response
         return res.status(200).json({
@@ -179,7 +179,7 @@ export const adminLogin=async(req,res)=>{
         res.cookie("token", token, {
             httpOnly: true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
             secure: process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-            sameSite: "strict", // Cookie is only sent in first-party context (prevents CSRF attacks)
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
             maxAge: 24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
         });
 
@@ -197,5 +197,76 @@ export const adminLogin=async(req,res)=>{
         console.log(error.message);
         // Return 500 Internal Server Error if something goes wrong
         return res.status(500).json({message: "Internal Server Error", success:false});
+    }
+}
+
+/**
+ * Controller function to verify if the user is authenticated
+ * Used by the frontend to check login status on page load or route navigation.
+ * Returns the user data if the token is valid, allowing the frontend to restore the session.
+ *
+ * @param {Object} req - Express request object (req.user set by protect middleware)
+ * @param {Object} res - Express response object
+ */
+export const isAuth = async (req, res) => {
+    try {
+        // Get user ID from the decoded token (attached by protect middleware)
+        const userId = req.user.userId;
+
+        // Find user in database by ID and exclude password field
+        const user = await User.findById(userId).select('-password');
+
+        // If user not found (token valid but user deleted), return error
+        if (!user) {
+            return res.status(404).json({ message: "User not found", success: false });
+        }
+
+        // Return success with user data, confirming the session is valid
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            }
+        });
+    } catch (error) {
+        // Log error message to console for debugging
+        console.log(error.message);
+        // Return 500 Internal Server Error if something goes wrong
+        return res.status(500).json({ message: "Internal Server Error", success: false });
+    }
+};
+
+// Controller function to get user profile
+export const getProfile = async (req, res) => {
+    try {
+        // Get user ID from the decoded token (attached by protect middleware)
+        const userId = req.user.userId;
+
+        // Find user in database by ID and exclude password field
+        const user = await User.findById(userId).select('-password');
+
+        // If user not found, return error
+        if (!user) {
+            return res.status(404).json({ message: "User not found", success: false });
+        }
+
+        // Return user profile data
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin || false
+            }
+        });
+    } catch (error) {
+        // Log error message to console for debugging
+        console.log(error.message);
+        // Return 500 Internal Server Error if something goes wrong
+        return res.status(500).json({ message: "Internal Server Error", success: false });
     }
 }
