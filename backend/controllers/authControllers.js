@@ -5,6 +5,9 @@ import jwt from "jsonwebtoken";
 // Import bcrypt library to hash passwords and compare hashed passwords
 import bcrypt from "bcrypt";
 
+// Detect production: Render sets RENDER=true, Vercel sets VERCEL=1
+const isProduction = process.env.NODE_ENV === "production" || !!process.env.RENDER || !!process.env.VERCEL;
+
 // Function to generate JWT token and set it as an HTTP-only cookie
 // Takes response object and payload (user data) as parameters
 const generateToken=(res,payload)=>{
@@ -13,8 +16,8 @@ const generateToken=(res,payload)=>{
     // Set the token as an HTTP-only cookie in the response
     res.cookie("token", token,{
         httpOnly:true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
-        secure:process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
+        secure: isProduction, // Cookie is only sent over HTTPS in production
+        sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
         maxAge:24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
     });
     // Return the generated token
@@ -130,8 +133,8 @@ export const logoutUser = (req, res) => {
         // Clear the token cookie from the browser by removing it
         res.clearCookie("token", {
             httpOnly: true, // Cookie cannot be accessed via JavaScript
-            secure: process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict" // Match the setting used when the cookie was created
+            secure: isProduction, // Cookie is only sent over HTTPS in production
+            sameSite: isProduction ? "none" : "strict" // Match the setting used when the cookie was created
         });
         // Return success response
         return res.status(200).json({
@@ -181,8 +184,8 @@ export const adminLogin=async(req,res)=>{
         // Set the token as an HTTP-only cookie in the response
         res.cookie("token", token, {
             httpOnly: true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
-            secure: process.env.NODE_ENV === "production", // Cookie is only sent over HTTPS in production
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
+            secure: isProduction, // Cookie is only sent over HTTPS in production
+            sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
             maxAge: 24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
         });
 
