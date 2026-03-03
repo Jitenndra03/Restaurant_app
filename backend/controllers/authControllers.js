@@ -55,7 +55,7 @@ export const registerUser=async (req,res)=>{
         });
 
         // Generate JWT token and set it as a cookie with the user's ID as payload
-        generateToken(res, {userId: newUser._id});
+       const token= generateToken(res, {userId: newUser._id});
 
         // Return success response with user details (excluding password)
         return res.status(201).json({
@@ -64,7 +64,9 @@ export const registerUser=async (req,res)=>{
             user: {
                 id: newUser._id,
                 name: newUser.name,
-                email: newUser.email
+                email: newUser.email,
+                token : token
+                
             }
         });
     } catch(error){
@@ -106,7 +108,7 @@ export const loginUser=async(req, res)=>{
         }
 
         // Generate JWT token with user ID and role (admin or user)
-        generateToken(res, {userId: user._id, role:user.isAdmin?"admin":"user"});
+    const token=    generateToken(res, {userId: user._id, role:user.isAdmin?"admin":"user"});
 
         // Return success response with user details (excluding password)
         res.status(200).json({
@@ -116,7 +118,8 @@ export const loginUser=async(req, res)=>{
                 id: user._id,
                 name:user.name,
                 email:user.email,
-                role:user.isAdmin?"admin":"user"
+                role:user.isAdmin?"admin":"user",
+                token:token
             }
         })
     } catch(error){
