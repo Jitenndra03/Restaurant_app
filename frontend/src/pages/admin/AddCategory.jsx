@@ -41,7 +41,7 @@ const AddCategory = () => {
       formData.append("image", image);
 
       const { data } = await axios.post("/api/category/add", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}`, },
       });
 
       if (data.success) {
