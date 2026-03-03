@@ -24,8 +24,8 @@ const AddCategory = () => {
   };
 
   /** Submit the form */
-  const token = localStorage.getItem(token);
-  console.log(token);
+  // const token = localStorage.getItem(token);
+  // console.log(token);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !image) {
