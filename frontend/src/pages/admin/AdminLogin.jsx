@@ -29,6 +29,7 @@ const AdminLogin = () => {
       const { data } = await axios.post("/api/auth/admin/login", { email, password });
       if (data.success) {
         setAdmin(data.admin);
+        console.log(data);
         localStorage.setItem("admin", JSON.stringify(data.admin));
         toast.success(data.message);
         navigate("/admin/dashboard");
