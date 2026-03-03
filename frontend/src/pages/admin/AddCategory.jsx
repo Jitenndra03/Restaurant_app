@@ -27,6 +27,8 @@ const AddCategory = () => {
   // const token = localStorage.getItem(token);
   // console.log(token);
   const handleSubmit = async (e) => {
+    const token = localStorage.getItem(token);
+    console.log(token);
     e.preventDefault();
     if (!name || !image) {
       toast.error("Please provide category name and image");
