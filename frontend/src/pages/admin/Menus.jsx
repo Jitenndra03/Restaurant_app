@@ -51,8 +51,11 @@ const Menus = () => {
   /** Delete a menu item */
   const handleDelete = async (id) => {
     if (!confirm("Delete this menu item?")) return;
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.delete(`/api/menu/delete/${id}`);
+      const { data } = await axios.delete(`/api/menu/delete/${id}`, {
+        headers: {Authorization : `Bearer ${token}`,}
+      });
       if (data.success) {
         toast.success("Deleted");
         setItems((prev) => prev.filter((m) => m._id !== id));
