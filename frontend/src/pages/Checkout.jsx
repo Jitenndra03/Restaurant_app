@@ -42,6 +42,7 @@ console.log(cart)
       menuItem: entry.menuItem._id,
       quantity: entry.quantity,
     }));
+    const token = localStorage.getItem("token")
     const { data } = await axios.post("/api/order/create", {
       items,
       deliveryAddress: {
@@ -53,7 +54,11 @@ console.log(cart)
       },
       paymentMethod: form.paymentMethod === "cash" ? "cash" : "online",
       notes: form.notes,
-    });
+    },
+                                      {
+                                        headers:{Authorization :  `Bearer ${token}`,}
+                                      }
+                                     );
     return data;
   };
 
