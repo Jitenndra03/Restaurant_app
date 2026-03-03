@@ -32,11 +32,15 @@ const MyOrders = () => {
      const token = localStorage.getItem("token")
     if (!confirm("Cancel this order?")) return;
     try {
-      const { data } = await axios.patch(`/api/order/cancel/${id}`,
-                                        {
-          headers: {Authorization : `Bearer ${token}`,}
-        }
-                                        );
+     const { data } = await axios.patch(
+  `/api/order/cancel/${id}`,
+  null,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
       if (data.success) {
         toast.success("Order cancelled");
         setOrders((prev) => prev.map((o) => (o._id === id ? { ...o, status: "cancelled" } : o)));
