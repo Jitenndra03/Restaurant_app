@@ -14,8 +14,12 @@ const MyBookings = () => {
   /** Fetch user reservations on mount */
   useEffect(() => {
     const fetchBookings = async () => {
+      const token = localStorage.getItem("token")
+      
       try {
-        const { data } = await axios.get("/api/reservation/my-reservations");
+        const { data } = await axios.get("/api/reservation/my-reservations",{
+          headers:{Authorization : `Bearer ${token}`,}
+        });
         if (data.success) {
           setBookings(data.reservations);
         }
