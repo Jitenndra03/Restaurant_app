@@ -47,8 +47,11 @@ const Orders = () => {
 
   /** Fetch all orders */
   const fetchOrders = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.get("/api/order/");
+      const { data } = await axios.get("/api/order/",{
+        headers:{Authorization : `Bearer ${token}`,}
+      });
       if (data.success) setOrders(data.orders);
     } catch (error) {
       console.log(error.message);
