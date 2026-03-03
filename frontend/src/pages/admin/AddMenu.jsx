@@ -26,7 +26,11 @@ const AddMenu = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const { data } = await axios.get("/api/category/all");
+        const { data } = await axios.get("/api/category/all", {
+          headers: {
+        Authorization: `Bearer ${token}`,
+      },
+        });
         if (data.success) setCategories(data.categories);
       } catch (err) {
         console.log(err.message);
