@@ -80,6 +80,7 @@ const isAuth = async () => {
 
   /** Fetch all menu items */
   const fetchMenus = async () => {
+    
     try {
       const { data } = await axios.get("/api/menu/all");
       if (data.success) {
@@ -92,8 +93,11 @@ const isAuth = async () => {
 
   /** Fetch the current user's cart */
   const fetchCartData = async () => {
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.get("/api/cart/");
+      const { data } = await axios.get("/api/cart/", {
+      headers : {Authorization : `Bearer ${token}`,}
+      });
       if (data.success) {
         setCart(data.cart);
       }
