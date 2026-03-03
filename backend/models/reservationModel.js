@@ -93,12 +93,13 @@ const reservationSchema = new mongoose.Schema({
 /**
  * Pre-save middleware to generate confirmation code
  */
-reservationSchema.pre('save', function(next) {
-    // Generate confirmation code if not already set
+reservationSchema.pre('save', function() {
     if (!this.confirmationCode) {
-        this.confirmationCode = 'RSV' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substr(2, 5).toUpperCase();
+        this.confirmationCode =
+            'RSV' +
+            Date.now().toString(36).toUpperCase() +
+            Math.random().toString(36).substring(2, 7).toUpperCase();
     }
-    next();
 });
 
 /**
