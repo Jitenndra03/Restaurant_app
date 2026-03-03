@@ -10,14 +10,15 @@ const isProduction = process.env.NODE_ENV === "production" || !!process.env.REND
 
 // Function to generate JWT token and set it as an HTTP-only cookie
 // Takes response object and payload (user data) as parameters
-const generateToken=(res,payload)=>{
-    // Create a JWT token with the payload, secret key from environment variables, and expiration time of 1 day
-    const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'1d'});
-    // Set the token as an HTTP-only cookie in the response
-    
-    // Return the generated token
-    return token;
-}
+const generateToken = (payload) => {
+    if (!payload) {
+        throw new Error("Payload is required for token generation");
+    }
+
+    return jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+    });
+};
 
 // Controller function to register a new user
 export const registerUser=async (req,res)=>{
@@ -48,9 +49,15 @@ export const registerUser=async (req,res)=>{
             email,
             password: hashedPassword
         });
-
+console.log("Payload:", {
+   userId: user._id,
+   role: user.isAdmin ? "admin" : "user"
+});
         // Generate JWT token and set it as a cookie with the user's ID as payload
-       const token= generateToken(res, {userId: newUser._id});
+     const token = generateToken({
+    userId: newUser._id,
+    role: newUser.isAdmin ? "admin" : "user"
+});
 
         // Return success response with user details (excluding password)
         return res.status(201).json({
@@ -100,7 +107,10 @@ export const loginUser = async (req, res) => {
                 success: false
             });
         }
-
+console.log("Payload:", {
+   userId: user._id,
+   role: user.isAdmin ? "admin" : "user"
+});
         const token = generateToken({
             userId: user._id,
             role: user.isAdmin ? "admin" : "user"
