@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const Cart = () => {
   const { navigate, user, axios, cart, totalPrice, fetchCartData, loading } = useContext(AppContext);
-console.log(cart.items[0].menuItem)
+
   useEffect(() => { if (user) fetchCartData(); }, [user]);
 
   /** Update quantity */
