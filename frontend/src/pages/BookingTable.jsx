@@ -133,7 +133,7 @@ const BookingTable = () => {
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition"
             >
               <option value="">Select occasion</option>
-              <option value="Birthday">Birthday</option>
+              <option value="birthday">Birthday</option>
               <option value="Anniversary">Anniversary</option>
               <option value="Business">Business Meeting</option>
               <option value="Date">Date Night</option>
