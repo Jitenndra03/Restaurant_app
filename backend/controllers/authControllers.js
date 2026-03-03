@@ -108,7 +108,10 @@ export const loginUser=async(req, res)=>{
         }
 
         // Generate JWT token with user ID and role (admin or user)
-    const token=    generateToken(res, {userId: user._id, role:user.isAdmin?"admin":"user"});
+    const token = generateToken(res, {
+            userId: user._id,
+            role: user.isAdmin ? "admin" : "user"
+        });
 
         // Return success response with user details (excluding password)
         res.status(200).json({
