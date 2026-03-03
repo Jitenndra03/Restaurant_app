@@ -24,8 +24,12 @@ const MenuDetails = () => {
   /** Fetch item */
   useEffect(() => {
     const fetchItem = async () => {
+      const token = localStorage.getItem("token")
       try {
-        const { data } = await axios.get(`/api/menu/${id}`);
+        const { data } = await axios.get(`/api/menu/${id}`,{
+          headers : {Authorization : `Bearer ${token}`}
+          
+        });
         if (data.success) setItem(data.menuItem);
       } catch (error) { console.log(error); }
       finally { setLoading(false); }
