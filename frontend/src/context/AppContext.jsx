@@ -47,11 +47,13 @@ const AppContextProvider = ({ children }) => {
   /** Check if user is authenticated (restores session on page load) */
   const isAuth = async () => {
     try {
-      const token = localStorage.getItem(token)
+      const token = localStorage.getItem("token")
       console.log("token is", token)
-      const { data } = await axios.get("/api/auth/is-auth",{
-         headers: {Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.get("/api/auth/is-auth", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
       });
       if (data.success) {
