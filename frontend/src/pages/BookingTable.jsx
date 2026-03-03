@@ -31,7 +31,7 @@ const BookingTable = () => {
   /** Submit reservation */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localSTORAGE.getItem("token")
+    const token = localStorage.getItem("token")
     if (!user) {
       toast.error("Please login to book a table");
       navigate("/login");
