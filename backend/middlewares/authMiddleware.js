@@ -11,6 +11,8 @@ import jwt from "jsonwebtoken";
 export const protect=(req,res,next)=>{
     // Extract the token from cookies sent by the client
     const token=req.cookies.token;
+    console.log(token);
+    console.log(req.cookies);
 
     // Check if token exists in the request
     if(!token){
