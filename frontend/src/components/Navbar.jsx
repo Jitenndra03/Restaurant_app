@@ -14,6 +14,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
+  const closeTimeout = useRef(null);
 const handleMouseEnter = () => {
   if (closeTimeout.current) {
     clearTimeout(closeTimeout.current);
