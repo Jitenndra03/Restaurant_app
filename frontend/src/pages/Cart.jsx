@@ -19,7 +19,7 @@ const Cart = () => {
       if (newQty < 1) {
         // Remove item if quantity goes to 0
         const { data } = await axios.delete(`/api/cart/remove/${menuItemId}`, {
-          headers: {`Bearer {token}`,}
+          headers: { Authorization : `Bearer {token}`,}
         });
         if (data.success) { toast.success("Item removed"); fetchCartData(); }
       } else {
