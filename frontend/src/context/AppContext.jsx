@@ -103,7 +103,7 @@ const AppContextProvider = ({ children }) => {
       const { data } = await axios.post("/api/cart/add", {
         menuItem: menuItemId,
         quantity: 1,
-      });
+      }, { withCredentials: true });
       if (data.success) {
         toast.success(data.message);
         fetchCartData();
