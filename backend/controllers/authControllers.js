@@ -182,21 +182,23 @@ export const adminLogin=async(req,res)=>{
         )
 
         // Set the token as an HTTP-only cookie in the response
-        res.cookie("token", token, {
-            httpOnly: true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
-            secure: isProduction, // Cookie is only sent over HTTPS in production
-            sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
-            maxAge: 24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
-        });
-        console.log(token);
+        // res.cookie("token", token, {
+        //     httpOnly: true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
+        //     secure: isProduction, // Cookie is only sent over HTTPS in production
+        //     sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
+        //     maxAge: 24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
+        // });
+        // console.log(token);
+        
 
         // Return success response with admin email
-        return res.status(200).json({
+        return res.status(201).json({
             message: "Admin logged in successfully",
             success:true,
             admin: {
                 email: email,
-                role: "admin"
+                role: "admin",
+                token: token
             }
         });
     } catch (error) {
