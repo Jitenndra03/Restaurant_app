@@ -55,12 +55,7 @@ const reservationSchema = new mongoose.Schema({
     reservationTime: {
         type: String,
         required: [true, 'Reservation time is required'],
-        enum: [
-            '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM',
-            '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
-            '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM',
-            '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM', '10:00 PM'
-        ]
+        
     },
     // Table number (assigned by admin/system)
     tableNumber: {
