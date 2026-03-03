@@ -34,7 +34,10 @@ const Categories = () => {
   const handleDelete = async (id) => {
     if (!confirm("Delete this category? This cannot be undone.")) return;
     try {
-      const { data } = await axios.delete(`/api/category/delete/${id}`);
+        const token = localStorage.getItem("token")
+      const { data } = await axios.delete(`/api/category/delete/${id}`, {
+        headers : {Authorization : `Bearer ${token}`}
+      });
       if (data.success) {
         toast.success("Category deleted");
         setCategories((prev) => prev.filter((c) => c._id !== id));
