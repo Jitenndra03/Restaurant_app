@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 const Checkout = () => {
   const { navigate, user, axios, cart, totalPrice, fetchCartData } = useContext(AppContext);
-
+console.log(cart)
   const [form, setForm] = useState({
     street: "",
     city: "",
