@@ -63,19 +63,20 @@ async function uploadToCloudinary(localPath, folder) {
 }
 
 /**
- * For each item, try to upload a relevant image from picsum/unsplash.
+ * For each item, try to upload a relevant food image from loremflickr.
  * Falls back to a solid-colour placeholder if anything fails.
  */
 async function getImageUrl(tag, folder) {
   try {
-    // Use picsum.photos (no API key needed) with a unique seed per item
-    const seed = encodeURIComponent(tag.replace(/\s/g, "-").toLowerCase());
-    const url = `https://picsum.photos/seed/${seed}/600/400`;
+    // Use loremflickr.com — returns images matching the given keywords (no API key needed)
+    const keywords = encodeURIComponent(tag.replace(/\s/g, ",") + ",food,indian");
+    const seed = tag.replace(/\s/g, "-").toLowerCase();
+    const url = `https://loremflickr.com/600/400/${keywords}`;
     const localPath = await downloadFile(url, `${seed}.jpg`);
     const cloudUrl = await uploadToCloudinary(localPath, folder);
     return cloudUrl;
   } catch {
-    // Fallback: upload a text overlay placeholder via Cloudinary URL builder
+    // Fallback: text placeholder
     return `https://placehold.co/600x400/f59e0b/ffffff?text=${encodeURIComponent(tag)}`;
   }
 }
