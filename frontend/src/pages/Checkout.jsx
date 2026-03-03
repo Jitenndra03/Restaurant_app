@@ -69,9 +69,13 @@ console.log(cart)
       toast.error("Failed to load payment gateway. Please try again.");
       return;
     }
-
+const token = localStorage.getItem("token")
     // Create Razorpay order
-    const { data: payData } = await axios.post("/api/payment/create-order", { orderId });
+    const { data: payData } = await axios.post("/api/payment/create-order", { orderId },
+                                                  {
+                                        headers:{Authorization :  `Bearer ${token}`,}
+                                      }
+                                              );
     if (!payData.success) {
       toast.error("Payment initiation failed");
       return;
