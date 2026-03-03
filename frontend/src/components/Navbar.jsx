@@ -14,7 +14,18 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const location = useLocation();
+const handleMouseEnter = () => {
+  if (closeTimeout.current) {
+    clearTimeout(closeTimeout.current);
+  }
+  setProfileOpen(true);
+};
 
+const handleMouseLeave = () => {
+  closeTimeout.current = setTimeout(() => {
+    setProfileOpen(false);
+  }, 200); // delay in ms
+};
   // Logout handler - clears cookie and user state
   const logout = async () => {
     try {
@@ -69,19 +80,19 @@ const Navbar = () => {
             <div className="hidden md:block relative">
               {user ? (
                 <>
-                  <button
-                    className="p-2 rounded-full hover:bg-gray-100 transition"
-                    onMouseEnter={() => setProfileOpen(true)}
-                    onMouseLeave={() => setProfileOpen(false)}
-                  >
+                 <button
+  className="p-2 rounded-full hover:bg-gray-100 transition"
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+>
                     <UserCircle size={26} className="text-gray-700" />
                   </button>
                   {profileOpen && (
                     <div
-                      onMouseEnter={() => setProfileOpen(true)}
-                      onMouseLeave={() => setProfileOpen(false)}
-                      className="absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-lg ring-1 ring-gray-100 py-2 z-50"
-                    >
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+  className="absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-lg ring-1 ring-gray-100 py-2 z-50"
+>
                       <Link to="/my-bookings" className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition">
                         <CalendarDays size={16} /> My Bookings
                       </Link>
