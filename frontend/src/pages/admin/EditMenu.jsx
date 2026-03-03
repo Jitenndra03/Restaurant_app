@@ -73,9 +73,9 @@ const EditMenu = () => {
       fd.append("category", form.category);
       fd.append("isVeg", form.isVeg);
       if (image) fd.append("image", image);
-
+const token = localStorage.getItem("token")
       const { data } = await axios.put(`/api/menu/update/${id}`, fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", headers : `Bearer ${token}`, },
       });
 
       if (data.success) {
