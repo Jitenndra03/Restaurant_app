@@ -34,7 +34,7 @@ connectCloudinary();
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173", // Allow requests from the frontend URL
+    origin: "https://restaurant-app-jade-sigma.vercel.app/" || "http://localhost:5173", // Allow requests from the frontend URL
     credentials: true // Allow cookies to be sent with requests (required for JWT in cookies)
 })); // Enable CORS with credentials
 app.use(cookieParser()); // Parse cookies
