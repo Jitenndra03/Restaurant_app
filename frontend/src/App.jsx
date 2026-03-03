@@ -33,6 +33,7 @@ import AddMenu from "./pages/admin/AddMenu";
 import Orders from "./pages/admin/Orders";
 import Bookings from "./pages/admin/Bookings";
 import EditMenu from "./pages/admin/EditMenu";
+import EditCategory from "./pages/admin/EditCategory";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="categories" element={<Categories />} />
           <Route path="add-category" element={<AddCategory />} />
+          <Route path="edit-category/:id" element={<EditCategory />} />
           <Route path="menus" element={<Menus />} />
           <Route path="add-menu" element={<AddMenu />} />
           <Route path="edit-menu/:id" element={<EditMenu />} />

@@ -6,7 +6,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import { Plus, Trash2, Pencil, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 const Categories = () => {
@@ -98,7 +98,14 @@ const Categories = () => {
                     <td className="px-6 py-4 text-gray-500">
                       {new Date(cat.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-4 text-right flex items-center justify-end gap-1">
+                      <Link
+                        to={`/admin/edit-category/${cat._id}`}
+                        className="p-2 rounded-lg hover:bg-blue-50 text-blue-500 transition"
+                        title="Edit category"
+                      >
+                        <Pencil size={16} />
+                      </Link>
                       <button
                         onClick={() => handleDelete(cat._id)}
                         className="p-2 rounded-lg hover:bg-red-50 text-red-500 transition cursor-pointer"
