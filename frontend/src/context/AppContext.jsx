@@ -45,24 +45,26 @@ const AppContextProvider = ({ children }) => {
   // ── API helpers ────────────────────────────────────────
 
   /** Check if user is authenticated (restores session on page load) */
-  const isAuth = async () => {
-    try {
-      const token = localStorage.getItem("token")
-      console.log("token is", token)
-      const { data } = await axios.get("/api/auth/is-auth", {
+ 
+const isAuth = async () => {
+  try {
+    const token = localStorage.getItem("token"); 
+
+    if (!token) return; // optional safety check
+
+    const { data } = await axios.get("/api/auth/is-auth", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-      });
-      if (data.success) {
-        setUser(data.user);
-      }
-    } catch (error) {
-      console.log("Auth check:", error.message);
+    if (data.success) {
+      setUser(data.user);
     }
-  };
+  } catch (error) {
+    console.log("Auth check:", error.message);
+  }
+};
 
   /** Fetch all food categories */
   const fetchCategories = async () => {
