@@ -3,7 +3,7 @@
  * Shows logo, nav links, cart badge, and user profile dropdown.
  * Responsive with hamburger menu on mobile.
  */
-import { useContext, useState } from "react";
+import { useContext, useState ,useRef} from "react";
 import { AppContext } from "../context/AppContext";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingCart, UserCircle, LogOut, Package, CalendarDays } from "lucide-react";
