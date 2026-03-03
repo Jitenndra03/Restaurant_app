@@ -13,6 +13,7 @@ export const protect=(req,res,next)=>{
     const token=req.cookies.token;
     console.log(token);
     console.log(req.cookies);
+    console.log(req);
 
     // Check if token exists in the request
     if(!token){
