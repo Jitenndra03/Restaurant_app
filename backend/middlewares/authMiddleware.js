@@ -8,31 +8,30 @@ import jwt from "jsonwebtoken";
  * @param {Object} res - Express response object
  * @param {Function} next - Express next middleware function
  */
-export const protect=(req,res,next)=>{
-    // Extract the token from cookies sent by the client
-    const token=req.cookies.token;
-    console.log(token);
-    console.log(req.cookies);
+export const protect = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
 
-    // Check if token exists in the request
-    if(!token){
-        // Return 401 Unauthorized if no token is found
-        return res.status(401).json({message:"Unauthorized - No token provided", success:false});
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        message: "Unauthorized - No token provided",
+        success: false,
+      });
     }
 
-    try {
-        // Verify the token using the JWT secret from environment variables
-        const decoded=jwt.verify(token,process.env.JWT_SECRET);
+    const token = authHeader.split(" ")[1];
 
-        // Attach the decoded user information to the request object for use in subsequent middleware/routes
-        req.user=decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Call next() to pass control to the next middleware or route handler
-        next();
-    } catch (error) {
-        // Return 401 Unauthorized if token verification fails (invalid or expired token)
-        return res.status(401).json({message:"Unauthorized - Invalid token", success:false});
-    }
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      message: "Unauthorized - Invalid token",
+      success: false,
+    });
+  }
 };
 
 /**
