@@ -58,6 +58,7 @@ const AddMenu = () => {
   /** Submit the form */
   const handleSubmit = async (e) => {
     e.preventDefault();
+       const token = localStorage.getItem("token")
     if (!form.name || !form.description || !form.price || !form.category || !image) {
       toast.error("All fields including image are required");
       return;
@@ -73,7 +74,9 @@ const AddMenu = () => {
       fd.append("image", image);
 
       const { data } = await axios.post("/api/menu/add", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                 },
       });
 
       if (data.success) {
