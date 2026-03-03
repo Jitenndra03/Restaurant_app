@@ -3,11 +3,17 @@ import crypto from "crypto";
 import Order from "../models/orderModel.js";
 import Cart from "../models/cartModel.js";
 
-// Initialise Razorpay instance (keys from .env)
-const razorpayInstance = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// Lazy-initialise Razorpay so env vars are loaded first
+let razorpayInstance;
+function getRazorpay() {
+    if (!razorpayInstance) {
+        razorpayInstance = new Razorpay({
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET,
+        });
+    }
+    return razorpayInstance;
+}
 
 /**
  * POST /api/payment/create-order  (protected)
@@ -33,7 +39,7 @@ export const createRazorpayOrder = async (req, res) => {
             receipt: orderId.toString(),
         };
 
-        const razorpayOrder = await razorpayInstance.orders.create(options);
+        const razorpayOrder = await getRazorpay().orders.create(options);
 
         res.status(200).json({
             success: true,
