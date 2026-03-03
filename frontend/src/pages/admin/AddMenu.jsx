@@ -121,7 +121,7 @@ const AddMenu = () => {
           {/* Price + Category row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Price ($)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Price (&#8377;)</label>
               <input
                 type="number" name="price" value={form.price} onChange={handleChange} required min="0" step="0.01"
                 placeholder="12.99"

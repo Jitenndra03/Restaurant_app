@@ -193,7 +193,7 @@ const Orders = () => {
 
                 {/* Total + date */}
                 <div className="flex items-end justify-between sm:flex-col sm:items-end">
-                  <p className="text-lg font-bold text-amber-600">${order.totalAmount?.toFixed(2)}</p>
+                  <p className="text-lg font-bold text-amber-600">&#8377;{order.totalAmount?.toFixed(2)}</p>
                   <p className="text-xs text-gray-400">{new Date(order.createdAt).toLocaleDateString()}</p>
                 </div>
               </div>

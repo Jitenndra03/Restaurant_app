@@ -127,7 +127,7 @@ const Dashboard = () => {
                     <td className="px-6 py-4 text-gray-900">{o.user?.name || "—"}</td>
                     <td className="px-6 py-4 text-gray-600">{o.items?.length || 0}</td>
                     <td className="px-6 py-4 font-medium text-gray-900">
-                      ${o.totalAmount?.toFixed(2)}
+                      &#8377;{o.totalAmount?.toFixed(2)}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColor(o.status)}`}>

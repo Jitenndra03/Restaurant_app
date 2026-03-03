@@ -110,9 +110,9 @@ const Menus = () => {
                     <td className="px-6 py-4">
                       <img src={m.image} alt={m.name} className="w-12 h-12 rounded-lg object-cover" />
                     </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 max-w-[180px] truncate">{m.name}</td>
+                    <td className="px-6 py-4 font-medium text-gray-900 max-w-45 truncate">{m.name}</td>
                     <td className="px-6 py-4 text-gray-500">{m.category?.name || "—"}</td>
-                    <td className="px-6 py-4 font-medium text-gray-900">${m.price}</td>
+                    <td className="px-6 py-4 font-medium text-gray-900">&#8377;{m.price}</td>
                     <td className="px-6 py-4 text-center">
                       <button
                         onClick={() => handleToggle(m._id)}
