@@ -31,6 +31,7 @@ const AddCategory = () => {
     e.preventDefault();
      const token = localStorage.getItem("token");
     console.log(token);
+  const i = token.toString()
     if (!name || !image) {
       toast.error("Please provide category name and image");
       return;
@@ -42,7 +43,7 @@ const AddCategory = () => {
       formData.append("image", image);
 
       const { data } = await axios.post("/api/category/add", formData, {
-        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}`, },
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${i}`, },
       });
 
       if (data.success) {
