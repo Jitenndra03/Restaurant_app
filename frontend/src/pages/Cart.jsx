@@ -81,7 +81,7 @@ console.log(cart.items[0].menuItem)
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Cart</h1>
 
         <div className="space-y-4">
-          {cart.map((entry) => {
+          {cart.items.map((entry) => {
             const item = entry.menuItem;
             if (!item) return null;
             return (
