@@ -113,7 +113,10 @@ const isAuth = async () => {
       const { data } = await axios.post("/api/cart/add", {
         menuItem: menuItemId,
         quantity: 1,
-      }, { withCredentials: true });
+      }, {
+        headers: {Authorization: `Bearer ${token}`,}
+      }
+                                       );
       if (data.success) {
         toast.success(data.message);
         fetchCartData();
