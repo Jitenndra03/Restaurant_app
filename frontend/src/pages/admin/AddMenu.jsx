@@ -25,6 +25,7 @@ const AddMenu = () => {
   /** Fetch categories for the dropdown */
   useEffect(() => {
     const load = async () => {
+      const token = localStorage.getItem("token")
       try {
         const { data } = await axios.get("/api/category/all", {
           headers: {
