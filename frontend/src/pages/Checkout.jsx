@@ -38,7 +38,7 @@ const Checkout = () => {
 
   /** Create the app order on the backend */
   const createAppOrder = async () => {
-    const items = cart.map((entry) => ({
+    const items = cart.items.map((entry) => ({
       menuItem: entry.menuItem._id,
       quantity: entry.quantity,
     }));
