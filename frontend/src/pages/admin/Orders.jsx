@@ -85,8 +85,11 @@ const Orders = () => {
 
   /** Update payment status */
   const changePayment = async (id, paymentStatus) => {
+       const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.patch(`/api/order/payment/${id}`, { paymentStatus });
+      const { data } = await axios.patch(`/api/order/payment/${id}`, { paymentStatus },{
+        headers:{Authorization : `Bearer ${token}`,}
+      });
       if (data.success) {
         toast.success("Payment status updated");
         setOrders((prev) =>
@@ -101,8 +104,11 @@ const Orders = () => {
   /** Delete order */
   const handleDelete = async (id) => {
     if (!confirm("Delete this order permanently?")) return;
+       const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.delete(`/api/order/delete/${id}`);
+      const { data } = await axios.delete(`/api/order/delete/${id}`,{
+        headers:{Authorization : `Bearer ${token}`,}
+      });
       if (data.success) {
         toast.success("Deleted");
         setOrders((prev) => prev.filter((o) => o._id !== id));
