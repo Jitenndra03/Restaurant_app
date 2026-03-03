@@ -22,7 +22,7 @@ const Login = () => {
       const { data } = await axios.post("/api/auth/login", { email, password });
       if (data.success) {
         setUser(data.user);
-        localStorage.setItem("data.token")
+        localStorage.setItem("data.user.token")
         toast.success(data.message);
         navigate("/");
       } else {
