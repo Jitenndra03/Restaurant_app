@@ -57,9 +57,9 @@ const EditCategory = () => {
       const fd = new FormData();
       fd.append("name", name.trim());
       if (image) fd.append("image", image);
-
+  const token = localStorage.getItem("token")
       const { data } = await axios.put(`/api/category/update/${id}`, fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", Authorization : `Bearer ${token}` },
       });
 
       if (data.success) {
