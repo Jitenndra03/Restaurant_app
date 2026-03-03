@@ -161,7 +161,10 @@ export const adminLogin=async(req,res)=>{
         // Get admin credentials from environment variables
         const adminEmail = process.env.ADMIN_EMAIL;
         const adminPassword = process.env.ADMIN_PASSWORD;
-
+        console.log(adminEmail);
+        console.log(adminPassword);
+        console.log(email);
+        console.log(password);
         // Check if provided credentials match the admin credentials from environment
         if(email !== adminEmail || password !== adminPassword){
             // Return 401 Unauthorized if credentials don't match
