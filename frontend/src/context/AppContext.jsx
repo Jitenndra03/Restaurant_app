@@ -109,6 +109,7 @@ const isAuth = async () => {
       navigate("/login");
       return;
     }
+    const token = localStorage.getItem("token")
     try {
       const { data } = await axios.post("/api/cart/add", {
         menuItem: menuItemId,
