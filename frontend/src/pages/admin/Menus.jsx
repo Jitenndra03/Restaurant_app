@@ -33,7 +33,10 @@ const Menus = () => {
   /** Toggle availability */
   const handleToggle = async (id) => {
     try {
-      const { data } = await axios.patch(`/api/menu/toggle/${id}`);
+      const token = localStorage.getItem("token")
+      const { data } = await axios.patch(`/api/menu/toggle/${id}`,null,  {
+        headers: {Authorization : `Bearer ${token}`,}
+      } );
       if (data.success) {
         toast.success(data.message);
         // Update local state optimistically
