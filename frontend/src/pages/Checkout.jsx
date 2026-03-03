@@ -172,7 +172,7 @@ console.log(cart)
             <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
               <div className="space-y-3 max-h-60 overflow-y-auto">
-                {cart?.map((entry) => (
+                {cart.items?.map((entry) => (
                   <div key={entry._id} className="flex justify-between text-sm">
                     <span className="text-gray-600 truncate mr-2">{entry.menuItem?.name} x{entry.quantity}</span>
                     <span className="font-medium text-gray-900">&#8377;{(entry.menuItem?.price * entry.quantity).toFixed(2)}</span>
