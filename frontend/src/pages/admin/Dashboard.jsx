@@ -22,13 +22,22 @@ const Dashboard = () => {
   /** Fetch overview data on mount */
   useEffect(() => {
     const load = async () => {
+      const token = localStorage.getItem("token")
       try {
         // Fire requests in parallel for performance
         const [ordersRes, bookingsRes, menusRes, categoriesRes] = await Promise.all([
-          axios.get("/api/order/"),
-          axios.get("/api/reservation/"),
-          axios.get("/api/menu/all"),
-          axios.get("/api/category/all"),
+          axios.get("/api/order/",{
+            headers:{Authorization : `Bearer ${token}`,}
+          }),
+          axios.get("/api/reservation/",{
+            headers:{Authorization : `Bearer ${token}`,}
+          }),
+          axios.get("/api/menu/all",{
+            headers:{Authorization : `Bearer ${token}`,}
+          }),
+          axios.get("/api/category/all",{
+            headers:{Authorization : `Bearer ${token}`,}
+          }),
         ]);
 
         setStats({
