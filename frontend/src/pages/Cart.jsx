@@ -14,10 +14,13 @@ const Cart = () => {
 
   /** Update quantity */
   const updateQty = async (menuItemId, newQty) => {
+    const token = localStorage.getItems("token")
     try {
       if (newQty < 1) {
         // Remove item if quantity goes to 0
-        const { data } = await axios.delete(`/api/cart/remove/${menuItemId}`);
+        const { data } = await axios.delete(`/api/cart/remove/${menuItemId}`, {
+          headers: {`Bearer {token},}
+        });
         if (data.success) { toast.success("Item removed"); fetchCartData(); }
       } else {
         const { data } = await axios.patch(`/api/cart/update/${menuItemId}`, { quantity: newQty });
