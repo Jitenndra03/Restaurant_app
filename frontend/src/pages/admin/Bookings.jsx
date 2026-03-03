@@ -57,9 +57,15 @@ const Bookings = () => {
   const changeStatus = async (id, status) => {
         const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.patch(`/api/reservation/status/${id}`,
-                                         {  headers: { Authorization: `Bearer ${token}`,} ,  
-                                         { status });
+     const { data } = await axios.patch(
+  `/api/reservation/status/${id}`,
+  { status },   
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
       if (data.success) {
         toast.success("Status updated");
         setBookings((prev) =>
