@@ -188,6 +188,7 @@ export const adminLogin=async(req,res)=>{
             sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
             maxAge: 24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
         });
+        console.log(token);
 
         // Return success response with admin email
         return res.status(200).json({
