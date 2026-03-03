@@ -40,7 +40,7 @@ const BookingTable = () => {
     setLoading(true);
     try {
       const { data } = await axios.post("/api/reservation/create", form,{
-       headers : {Authorization : `Bearer ${token},} 
+       headers : {Authorization : `Bearer ${token}`,} 
       });
       if (data.success) {
         toast.success("Table reserved successfully!");
