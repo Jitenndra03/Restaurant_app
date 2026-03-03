@@ -33,8 +33,13 @@ const Cart = () => {
 
   /** Remove a single item from cart */
   const removeItem = async (menuItemId) => {
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.delete(`/api/cart/remove/${menuItemId}`);
+      const { data } = await axios.delete(`/api/cart/remove/${menuItemId}`,
+                                          {
+                                            headers: {Authorization : `Bearer {token}`,}
+                                          }
+                                         );
       if (data.success) { toast.success("Item removed"); fetchCartData(); }
       else toast.error(data.message);
     } catch (error) {
