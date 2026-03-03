@@ -49,12 +49,7 @@ export const registerUser=async (req,res)=>{
             email,
             password: hashedPassword
         });
-console.log("Payload:", {
-   userId: newUser._id,
-   role: newUser.isAdmin ? "admin" : "user"
-});
-        // Generate JWT token and set it as a cookie with the user's ID as payload
-     const token = generateToken({
+const token = generateToken({
     userId: newUser._id,
     role: newUser.isAdmin ? "admin" : "user"
 });
