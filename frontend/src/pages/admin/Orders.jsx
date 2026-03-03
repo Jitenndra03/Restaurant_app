@@ -66,8 +66,12 @@ const Orders = () => {
 
   /** Update order status */
   const changeStatus = async (id, status) => {
+    const token = localStorage.getItem("token")
     try {
-      const { data } = await axios.patch(`/api/order/status/${id}`, { status });
+      const { data } = await axios.patch(`/api/order/status/${id}`, { status },{
+        headers:{Authorization : `Bearer ${token}`,}
+      }
+                                        );
       if (data.success) {
         toast.success("Status updated");
         setOrders((prev) =>
