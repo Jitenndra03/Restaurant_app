@@ -33,8 +33,14 @@ const Bookings = () => {
 
   /** Fetch all reservations */
   const fetchBookings = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.get("/api/reservation/");
+      const { data } = await axios.get("/api/reservation/",
+                                       {
+        headers: { Authorization: `Bearer ${token}`, },
+                                         
+                                       }
+                                      );
       if (data.success) setBookings(data.reservations);
     } catch (error) {
       console.log(error.message);
