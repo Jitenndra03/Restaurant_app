@@ -14,12 +14,7 @@ const generateToken=(res,payload)=>{
     // Create a JWT token with the payload, secret key from environment variables, and expiration time of 1 day
     const token=jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:'1d'});
     // Set the token as an HTTP-only cookie in the response
-    res.cookie("token", token,{
-        httpOnly:true, // Cookie cannot be accessed via JavaScript (prevents XSS attacks)
-        secure: isProduction, // Cookie is only sent over HTTPS in production
-        sameSite: isProduction ? "none" : "strict", // 'none' for cross-origin in production, 'strict' for local dev
-        maxAge:24*60*60*1000 // Cookie expires in 24 hours (in milliseconds)
-    });
+    
     // Return the generated token
     return token;
 }
@@ -77,61 +72,60 @@ export const registerUser=async (req,res)=>{
     }
 }
 
-// Controller function to log in an existing user
-export const loginUser=async(req, res)=>{
-    try{
-        // Extract email and password from the request body
-        const {email, password}=req.body;
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-        // Validate that both email and password are provided
-        if(!email || !password){
-            // Return 400 Bad Request if any field is missing
-            return res.status(400).json({message:"Please fill all the fields", success:false});
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Please fill all the fields",
+                success: false
+            });
         }
 
-        // Find user in the database by email
-        const user=await User.findOne({email});
+        const user = await User.findOne({ email });
 
-        // If user doesn't exist, return error message
-        if(!user){
-            // Return 404 Not Found if user doesn't exist
-            return res.status(404).json({message:"User not found", success:false});
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            });
         }
 
-        // Compare the provided password with the hashed password stored in the database
-        const isMatch=await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
-        // If passwords don't match, return error message
-        if(!isMatch){
-            // Return 401 Unauthorized if credentials are invalid
-            return res.status(401).json({message:"Invalid credentials", success:false});
+        if (!isMatch) {
+            return res.status(401).json({
+                message: "Invalid credentials",
+                success: false
+            });
         }
 
-        // Generate JWT token with user ID and role (admin or user)
-    const token = generateToken(res, {
+        const token = generateToken({
             userId: user._id,
             role: user.isAdmin ? "admin" : "user"
         });
 
-        // Return success response with user details (excluding password)
-        res.status(200).json({
-            message : "User logged in successfully",
-            success : true,
-            user:{
+        return res.status(200).json({
+            message: "User logged in successfully",
+            success: true,
+            user: {
                 id: user._id,
-                name:user.name,
-                email:user.email,
-                role:user.isAdmin?"admin":"user",
-                token:token
-            }
-        })
-    } catch(error){
-        // Log error message to console for debugging
+                name: user.name,
+                email: user.email,
+                role: user.isAdmin ? "admin" : "user",
+            },
+            token
+        });
+
+    } catch (error) {
         console.log(error.message);
-        // Return 500 Internal Server Error if something goes wrong
-        return res.status(500).json({message:"Internal Server Error", success:false});
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        });
     }
-}
+};
 
 // Controller function to log out the current user
 export const logoutUser = (req, res) => {
