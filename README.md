@@ -239,7 +239,7 @@ VITE_BACKEND_URL=http://localhost:5000
 | `PORT` | Server port | `5000` |
 | `MONGO_URI` | MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/restaurant` |
 | `JWT_SECRET` | Secret key for JWT signing | `your_jwt_secret_key_here` |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | `dxxxxxxxxx` |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | `xxxxxxxxxx` |
 | `CLOUDINARY_API_KEY` | Cloudinary API key | `123456789012345` |
 | `CLOUDINARY_API_SECRET` | Cloudinary API secret | `abcdefghijklmnopqrstuvwx` |
 | `STRIPE_SECRET_KEY` *(if used)* | Stripe/payment provider key | `sk_test_...` |
@@ -690,7 +690,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Jitendra**
 
-- GitHub: [@your-github-username](https://github.com/your-github-username)
+- GitHub: [@your-github-username](https://github.com/jitenndra03)
 
 ---
 
